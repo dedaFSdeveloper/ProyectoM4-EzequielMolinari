@@ -10,15 +10,14 @@ const TasksPage = () => {
   const { user } = useAuth()
   const navigate = useNavigate()
 
-  /
-  const { tasks, loading, addTask, toggleTask, deleteTask } = useTasks(user?.uid || '')
+  const { tasks, loading, addTask, toggleTask, deleteTask } = useTasks(user?.uid ?? '')
 
   const handleLogout = async () => {
     try {
       await signOut(auth)
       navigate('/login')
     } catch (error) {
-      console.log('error al cerrar sesion', error) 
+      console.log('error al cerrar sesion', error)
     }
   }
 
@@ -29,11 +28,7 @@ const TasksPage = () => {
       <h2>Mis Tareas</h2>
       <p>Hola, {user?.email}</p>
       <button onClick={handleLogout}>Cerrar sesión</button>
-
-      {}
       <TodoForm onAdd={addTask} />
-
-      {}
       {tasks.length === 0 ? (
         <p>No tenés tareas todavía, agregá una!</p>
       ) : (

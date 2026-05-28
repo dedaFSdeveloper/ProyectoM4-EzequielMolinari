@@ -1,14 +1,13 @@
 import { useState, useEffect } from 'react'
 import { onAuthStateChanged } from 'firebase/auth'
 import { auth } from '../services/firebase'
-import { User } from '../types'
+import type { AppUser } from '../types'
 
 const useAuth = () => {
-  const [user, setUser] = useState<User | null>(null)
+  const [user, setUser] = useState<AppUser | null>(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    // firebase nos avisa cada vez que cambia el estado del usuario
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
       if (firebaseUser) {
         setUser({
@@ -22,7 +21,6 @@ const useAuth = () => {
       setLoading(false)
     })
 
-    // limpiamos el listener cuando se desmonta el componente
     return () => unsubscribe()
   }, [])
 

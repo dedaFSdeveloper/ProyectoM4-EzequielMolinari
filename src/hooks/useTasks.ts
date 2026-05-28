@@ -10,7 +10,7 @@ import {
   where,
 } from 'firebase/firestore'
 import { db } from '../services/firebase'
-import { Task } from '../types'
+import type { Task } from '../types'
 
 const useTasks = (userId: string) => {
   const [tasks, setTasks] = useState<Task[]>([])
