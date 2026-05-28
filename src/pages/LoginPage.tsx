@@ -14,7 +14,6 @@ const LoginPage = () => {
     e.preventDefault()
     setError('')
 
-    // validaciones antes de llamar a firebase
     if (!isValidEmail(email)) {
       setError('El email no es válido')
       return
@@ -27,33 +26,41 @@ const LoginPage = () => {
     try {
       await signInWithEmailAndPassword(auth, email, password)
       navigate('/tasks')
-    } catch (err) {
+    } catch {
       setError('Email o contraseña incorrectos')
     }
   }
 
   return (
-    <div>
-      <h2>Iniciar sesión</h2>
-      <form onSubmit={handleLogin}>
-        <input
-          type='email'
-          placeholder='Email'
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <input
-          type='password'
-          placeholder='Contraseña'
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-        <button type='submit'>Entrar</button>
-      </form>
-      <p>
-        ¿No tenés cuenta? <Link to='/register'>Registrate</Link>
-      </p>
+    <div className='page'>
+      <div className='card'>
+        <p className='tag'>MateCode // auth</p>
+        <h2 style={{ marginBottom: '28px', fontSize: '22px' }}>Iniciar sesión</h2>
+        <form onSubmit={handleLogin}>
+          <div className='form-group'>
+            <input
+              type='email'
+              placeholder='email'
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <input
+              type='password'
+              placeholder='contraseña'
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            {error && <p className='error-msg'>{error}</p>}
+            <button type='submit' className='btn-primary'>
+              Entrar
+            </button>
+          </div>
+        </form>
+        <p style={{ fontSize: '13px', color: 'var(--muted)' }}>
+          ¿No tenés cuenta?{' '}
+          <Link to='/register'>Registrate</Link>
+        </p>
+      </div>
     </div>
   )
 }

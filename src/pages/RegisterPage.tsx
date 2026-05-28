@@ -26,33 +26,41 @@ const RegisterPage = () => {
     try {
       await createUserWithEmailAndPassword(auth, email, password)
       navigate('/tasks')
-    } catch (err) {
+    } catch {
       setError('No se pudo crear la cuenta, probá con otro email')
     }
   }
 
   return (
-    <div>
-      <h2>Crear cuenta</h2>
-      <form onSubmit={handleRegister}>
-        <input
-          type='email'
-          placeholder='Email'
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <input
-          type='password'
-          placeholder='Contraseña'
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-        <button type='submit'>Registrarse</button>
-      </form>
-      <p>
-        ¿Ya tenés cuenta? <Link to='/login'>Iniciá sesión</Link>
-      </p>
+    <div className='page'>
+      <div className='card'>
+        <p className='tag'>MateCode // registro</p>
+        <h2 style={{ marginBottom: '28px', fontSize: '22px' }}>Crear cuenta</h2>
+        <form onSubmit={handleRegister}>
+          <div className='form-group'>
+            <input
+              type='email'
+              placeholder='email'
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <input
+              type='password'
+              placeholder='contraseña'
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            {error && <p className='error-msg'>{error}</p>}
+            <button type='submit' className='btn-primary'>
+              Registrarse
+            </button>
+          </div>
+        </form>
+        <p style={{ fontSize: '13px', color: 'var(--muted)' }}>
+          ¿Ya tenés cuenta?{' '}
+          <Link to='/login'>Iniciá sesión</Link>
+        </p>
+      </div>
     </div>
   )
 }

@@ -16,21 +16,35 @@ const TasksPage = () => {
     try {
       await signOut(auth)
       navigate('/login')
-    } catch (error) {
-      console.log('error al cerrar sesion', error)
+    } catch {
+      console.log('error al cerrar sesion')
     }
   }
 
-  if (loading) return <p>Cargando tareas...</p>
+  if (loading) return <p style={{ padding: '60px 24px', fontFamily: 'var(--mono)', color: 'var(--muted)' }}>cargando...</p>
 
   return (
-    <div>
-      <h2>Mis Tareas</h2>
-      <p>Hola, {user?.email}</p>
-      <button onClick={handleLogout}>Cerrar sesión</button>
+    <div className='page'>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '40px' }}>
+        <div>
+          <p className='tag'>MateCode // tareas</p>
+          <h2 style={{ fontSize: '22px' }}>Mis Tareas</h2>
+          <p style={{ fontSize: '12px', color: 'var(--muted)', fontFamily: 'var(--mono)', marginTop: '4px' }}>
+            {user?.email}
+          </p>
+        </div>
+        <button className='btn-ghost' onClick={handleLogout}>
+          Salir
+        </button>
+      </div>
+
       <TodoForm onAdd={addTask} />
+
+      <p className='tag'>// lista ({tasks.length})</p>
       {tasks.length === 0 ? (
-        <p>No tenés tareas todavía, agregá una!</p>
+        <p style={{ color: 'var(--muted)', fontFamily: 'var(--mono)', fontSize: '13px' }}>
+          _ no hay tareas todavía
+        </p>
       ) : (
         <TodoList tasks={tasks} onToggle={toggleTask} onDelete={deleteTask} />
       )}
