@@ -59,7 +59,12 @@ const useTasks = (userId: string) => {
     await deleteDoc(taskRef)
   }
 
-  return { tasks, loading, addTask, toggleTask, deleteTask }
+  const editTask = async (taskId: string, newTitle: string) => {
+    const taskRef = doc(db, 'tasks', taskId)
+    await updateDoc(taskRef, { title: newTitle })
+  }
+
+  return { tasks, loading, addTask, toggleTask, deleteTask, editTask }
 }
 
 export default useTasks

@@ -13,7 +13,7 @@ import type { Task } from '../types'
 const TasksPage = () => {
   const { user } = useAuth()
   const navigate = useNavigate()
-  const { tasks, loading, addTask, toggleTask, deleteTask } = useTasks(user?.uid ?? '')
+  const { tasks, loading, addTask, toggleTask, deleteTask, editTask } = useTasks(user?.uid ?? '')
   const [filtro, setFiltro] = useState<'todas' | 'pendientes' | 'completadas'>('todas')
 
   const handleAddTask = async (title: string, description: string, dueDate?: string, priority?: 'baja' | 'media' | 'alta') => {
@@ -29,6 +29,8 @@ const TasksPage = () => {
     return true
   })
 
+  const pendientes = tasks.filter((t) => !t.completed).length
+
   const handleLogout = async () => {
     try {
       await signOut(auth)
@@ -38,16 +40,22 @@ const TasksPage = () => {
     }
   }
 
-  if (loading) return <p style={{ padding: '60px 24px', fontFamily: 'var(--mono)', color: 'var(--muted)' }}>cargando...</p>
+  if (loading) return (
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+      <p style={{ fontFamily: 'var(--mono)', color: 'var(--green)', fontSize: '13px', letterSpacing: '2px' }}>
+        cargando_
+      </p>
+    </div>
+  )
 
   return (
     <div className='page'>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '40px' }}>
         <div>
-          <p className='tag'>MateCode // tareas</p>
+          <p className='tag'>// tareas</p>
           <h2 style={{ fontSize: '22px' }}>Mis Tareas</h2>
           <p style={{ fontSize: '12px', color: 'var(--muted)', fontFamily: 'var(--mono)', marginTop: '4px' }}>
-            {user?.email}
+            {user?.email} · <span style={{ color: 'var(--green)' }}>{pendientes} pendientes</span>
           </p>
         </div>
         <button className='btn-ghost' onClick={handleLogout}>
@@ -65,7 +73,7 @@ const TasksPage = () => {
           _ no hay tareas {filtro === 'todas' ? 'todavía' : filtro}
         </p>
       ) : (
-        <TodoList tasks={tareasFiltradas} onToggle={toggleTask} onDelete={deleteTask} />
+        <TodoList tasks={tareasFiltradas} onToggle={toggleTask} onDelete={deleteTask} onEdit={editTask} />
       )}
     </div>
   )
