@@ -6,6 +6,12 @@ interface Props {
   onDelete: (taskId: string) => void
 }
 
+const coloresPrioridad = {
+  alta: '#ff4444',
+  media: '#f5e642',
+  baja: '#39ff6e',
+}
+
 const TodoList = ({ tasks, onToggle, onDelete }: Props) => {
   return (
     <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '10px' }}>
@@ -15,7 +21,7 @@ const TodoList = ({ tasks, onToggle, onDelete }: Props) => {
           style={{
             background: 'var(--surface2)',
             border: '1px solid var(--border)',
-            borderLeft: task.completed ? '3px solid var(--muted)' : '3px solid var(--green)',
+            borderLeft: `3px solid ${task.completed ? 'var(--muted)' : coloresPrioridad[task.priority ?? 'media']}`,
             borderRadius: 'var(--radius)',
             padding: '14px 16px',
             display: 'flex',
@@ -50,6 +56,22 @@ const TodoList = ({ tasks, onToggle, onDelete }: Props) => {
                 {task.description}
               </p>
             )}
+            <div style={{ display: 'flex', gap: '12px', marginTop: '8px' }}>
+              <span style={{
+                fontSize: '11px',
+                fontFamily: 'var(--mono)',
+                color: coloresPrioridad[task.priority ?? 'media'],
+                textTransform: 'uppercase',
+                letterSpacing: '1px',
+              }}>
+                {task.priority ?? 'media'}
+              </span>
+              {task.dueDate && (
+                <span style={{ fontSize: '11px', fontFamily: 'var(--mono)', color: 'var(--muted)' }}>
+                  vence: {task.dueDate}
+                </span>
+              )}
+            </div>
           </div>
           <button className='btn-danger' onClick={() => onDelete(task.id)}>
             borrar

@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { signOut } from 'firebase/auth'
 import { auth } from '../services/firebase'
 import { useNavigate } from 'react-router-dom'
@@ -5,12 +6,28 @@ import useAuth from '../hooks/useAuth'
 import useTasks from '../hooks/useTasks'
 import TodoForm from '../components/TodoForm'
 import TodoList from '../components/TodoList'
+import TaskFilter from '../components/TaskFilter'
+import { sendTaskEmail } from '../services/emailService'
+import type { Task } from '../types'
 
 const TasksPage = () => {
   const { user } = useAuth()
   const navigate = useNavigate()
-
   const { tasks, loading, addTask, toggleTask, deleteTask } = useTasks(user?.uid ?? '')
+  const [filtro, setFiltro] = useState<'todas' | 'pendientes' | 'completadas'>('todas')
+
+  const handleAddTask = async (title: string, description: string, dueDate?: string, priority?: 'baja' | 'media' | 'alta') => {
+    await addTask(title, description, dueDate, priority)
+    if (user?.email) {
+      await sendTaskEmail(user.email, title)
+    }
+  }
+
+  const tareasFiltradas: Task[] = tasks.filter((task) => {
+    if (filtro === 'pendientes') return !task.completed
+    if (filtro === 'completadas') return task.completed
+    return true
+  })
 
   const handleLogout = async () => {
     try {
@@ -38,15 +55,17 @@ const TasksPage = () => {
         </button>
       </div>
 
-      <TodoForm onAdd={addTask} />
+      <TodoForm onAdd={handleAddTask} />
 
-      <p className='tag'>// lista ({tasks.length})</p>
-      {tasks.length === 0 ? (
+      <p className='tag'>// lista ({tareasFiltradas.length})</p>
+      <TaskFilter filtroActual={filtro} onChange={setFiltro} />
+
+      {tareasFiltradas.length === 0 ? (
         <p style={{ color: 'var(--muted)', fontFamily: 'var(--mono)', fontSize: '13px' }}>
-          _ no hay tareas todavía
+          _ no hay tareas {filtro === 'todas' ? 'todavía' : filtro}
         </p>
       ) : (
-        <TodoList tasks={tasks} onToggle={toggleTask} onDelete={deleteTask} />
+        <TodoList tasks={tareasFiltradas} onToggle={toggleTask} onDelete={deleteTask} />
       )}
     </div>
   )

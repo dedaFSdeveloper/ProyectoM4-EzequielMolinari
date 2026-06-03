@@ -17,7 +17,6 @@ const useTasks = (userId: string) => {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    // traemos solo las tareas del usuario logueado
     const q = query(collection(db, 'tasks'), where('userId', '==', userId))
 
     const unsubscribe = onSnapshot(q, (snapshot) => {
@@ -26,31 +25,35 @@ const useTasks = (userId: string) => {
         ...doc.data(),
       })) as Task[]
 
-      setTasks(tareasFirebase)
+      const ordenadas = tareasFirebase.sort((a, b) => {
+        const prioridades = { alta: 0, media: 1, baja: 2 }
+        return prioridades[a.priority] - prioridades[b.priority]
+      })
+
+      setTasks(ordenadas)
       setLoading(false)
     })
 
     return () => unsubscribe()
   }, [userId])
 
-  // agregar tarea
-  const addTask = async (title: string, description: string) => {
+  const addTask = async (title: string, description: string, dueDate?: string, priority: 'baja' | 'media' | 'alta' = 'media') => {
     await addDoc(collection(db, 'tasks'), {
       title,
       description,
       completed: false,
       createdAt: new Date(),
       userId,
+      dueDate: dueDate ?? '',
+      priority,
     })
   }
 
-  // marcar como completada
   const toggleTask = async (taskId: string, completed: boolean) => {
     const taskRef = doc(db, 'tasks', taskId)
     await updateDoc(taskRef, { completed: !completed })
   }
 
-  // borrar tarea
   const deleteTask = async (taskId: string) => {
     const taskRef = doc(db, 'tasks', taskId)
     await deleteDoc(taskRef)

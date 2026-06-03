@@ -5,6 +5,8 @@ export interface Task {
   completed: boolean
   createdAt: Date
   userId: string
+  dueDate?: string
+  priority: 'baja' | 'media' | 'alta'
 }
 
 export interface AppUser {

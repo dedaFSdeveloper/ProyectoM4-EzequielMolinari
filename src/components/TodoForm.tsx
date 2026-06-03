@@ -1,12 +1,14 @@
 import { useState } from 'react'
 
 interface Props {
-  onAdd: (title: string, description: string) => void
+  onAdd: (title: string, description: string, dueDate?: string, priority?: 'baja' | 'media' | 'alta') => void
 }
 
 const TodoForm = ({ onAdd }: Props) => {
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
+  const [dueDate, setDueDate] = useState('')
+  const [priority, setPriority] = useState<'baja' | 'media' | 'alta'>('media')
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -16,9 +18,11 @@ const TodoForm = ({ onAdd }: Props) => {
       return
     }
 
-    onAdd(title, description)
+    onAdd(title, description, dueDate, priority)
     setTitle('')
     setDescription('')
+    setDueDate('')
+    setPriority('media')
   }
 
   return (
@@ -38,6 +42,34 @@ const TodoForm = ({ onAdd }: Props) => {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
+          <div style={{ display: 'flex', gap: '12px' }}>
+            <input
+              type='date'
+              value={dueDate}
+              onChange={(e) => setDueDate(e.target.value)}
+              style={{ flex: 1 }}
+            />
+            <select
+              value={priority}
+              onChange={(e) => setPriority(e.target.value as 'baja' | 'media' | 'alta')}
+              style={{
+                flex: 1,
+                background: 'var(--surface2)',
+                border: '1px solid var(--border)',
+                borderLeft: '3px solid var(--muted)',
+                borderRadius: 'var(--radius)',
+                padding: '11px 14px',
+                color: 'var(--text)',
+                fontFamily: 'var(--mono)',
+                fontSize: '13px',
+                outline: 'none',
+              }}
+            >
+              <option value='baja'>baja</option>
+              <option value='media'>media</option>
+              <option value='alta'>alta</option>
+            </select>
+          </div>
           <button type='submit' className='btn-primary' style={{ alignSelf: 'flex-start' }}>
             + Agregar
           </button>
