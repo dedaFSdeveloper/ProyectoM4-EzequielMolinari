@@ -1,73 +1,86 @@
-# React + TypeScript + Vite
+# ProyectoM4 - Ezequiel Molinari
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+SPA de gestión de tareas 
 
-Currently, two official plugins are available:
+## Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- React + TypeScript
+- Firebase (Auth + Firestore)
+- AWS SES + Vercel Serverless Functions
+- Vitest + React Testing Library
 
-## React Compiler
+## Requisitos
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Node.js 18+
+- Cuenta en Firebase
+- Cuenta en AWS con SES configurado
 
-## Expanding the ESLint configuration
+## Instalación
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+1. Clonar el repositorio
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+git clone <url-del-repo>
+cd ProyectoM4-EzequielMolinari
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+2. Instalar dependencias
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```bash
+npm install
+```
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+3. Crear el archivo `.env` basándose en `.env.example`
+
+```bash
+cp .env.example .env
+```
+
+4. Completar las variables de entorno en `.env`
+
+## Variables de entorno
+
+```env
+# Firebase
+VITE_FIREBASE_API_KEY=
+VITE_FIREBASE_AUTH_DOMAIN=
+VITE_FIREBASE_PROJECT_ID=
+VITE_FIREBASE_STORAGE_BUCKET=
+VITE_FIREBASE_MESSAGING_SENDER_ID=
+VITE_FIREBASE_APP_ID=
+
+# AWS SES
+AWS_ACCESS_KEY_ID=
+AWS_SECRET_ACCESS_KEY=
+AWS_REGION=
+SES_FROM_EMAIL=
+```
+
+## Scripts
+
+```bash
+npm run dev      # servidor de desarrollo
+npm run build    # build de producción
+npm run test     # correr tests
+```
+
+## Deploy en Vercel
+
+1. Importar el repositorio en Vercel
+2. Agregar las variables de entorno en el panel de Vercel
+3. Vercel detecta automáticamente que es un proyecto Vite
+
+## Estructura
+
+```
+src/
+├─ pages/        # Login, Register, Tasks
+├─ components/   # TodoForm, TodoList, TaskFilter
+├─ hooks/        # useAuth, useTasks
+├─ services/     # firebase.ts, emailService.ts
+├─ routes/       # ProtectedRoute
+├─ types/        # interfaces TypeScript
+└─ utils/        # validators
+functions/       # Serverless Functions (AWS SES)
+tests/           # unit tests
 ```

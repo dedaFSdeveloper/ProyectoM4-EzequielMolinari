@@ -1,17 +1,16 @@
+import  type { ReactElement } from 'react'
 import { Navigate } from 'react-router-dom'
 import useAuth from '../hooks/useAuth'
 
 interface Props {
-  children: JSX.Element
+  children: ReactElement
 }
 
 const ProtectedRoute = ({ children }: Props) => {
   const { user, loading } = useAuth()
 
-  // mientras firebase verifica si hay usuario, no hacemos nada
   if (loading) return <p>Cargando...</p>
 
-  // si no hay usuario logueado, mandamos al login
   if (!user) return <Navigate to='/login' />
 
   return children
