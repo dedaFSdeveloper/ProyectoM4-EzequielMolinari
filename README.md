@@ -2,46 +2,52 @@
 
 🔗 **Deploy:** https://proyecto-m4-ezequiel-molinari.vercel.app
 
-📧 **Email de prueba:** test.proyectom4@gmail.com  
-🔑 **Contraseña de prueba:** ADMIN1234
+## Credenciales de prueba
 
-SPA de gestión de tareas 
+```
+Email: test.proyectom4@gmail.com
+Contraseña: ADMIN1234
+```
+
+> ⚠️ AWS SES está en modo sandbox. Los emails pueden llegar a spam.
+
+---
+
+## Descripción
+
+SPA de gestión de tareas que permite a los usuarios organizar su trabajo diario de forma eficiente, persistente y accesible desde cualquier dispositivo.
 
 ## Stack
 
-- React + TypeScript
-- Firebase (Auth + Firestore)
-- AWS SES + Vercel Serverless Functions
-- Vitest + React Testing Library
+- **Frontend:** React + TypeScript
+- **BaaS:** Firebase (Authentication + Cloud Firestore)
+- **Notificaciones:** AWS SES + Vercel Serverless Functions
+- **Deploy:** Vercel
+- **Testing:** Vitest + React Testing Library
 
-## Requisitos
+## Funcionalidades
 
-- Node.js 18+
-- Cuenta en Firebase
-- Cuenta en AWS con SES configurado
+- Registro e inicio de sesión con email y contraseña
+- Alta, edición y eliminación de tareas
+- Marcar tareas como completadas
+- Filtros: todas, pendientes y completadas
+- Prioridad por tarea (alta, media, baja) con ordenamiento automático
+- Fecha de vencimiento opcional — por decisión de diseño la fecha no es obligatoria.
+- Notificación por email al crear una tarea via AWS SES
+- Contador de tareas pendientes en tiempo real
 
-## Instalación
 
-1. Clonar el repositorio
+
+## Instalación local
 
 ```bash
-git clone <url-del-repo>
+git clone https://github.com/dedaFSdeveloper/ProyectoM4-EzequielMolinari.git
 cd ProyectoM4-EzequielMolinari
-```
-
-2. Instalar dependencias
-
-```bash
 npm install
-```
-
-3. Crear el archivo `.env` basándose en `.env.example`
-
-```bash
 cp .env.example .env
+# completar variables en .env
+npm run dev
 ```
-
-4. Completar las variables de entorno en `.env`
 
 ## Variables de entorno
 
@@ -64,16 +70,10 @@ SES_FROM_EMAIL=
 ## Scripts
 
 ```bash
-npm run dev      # servidor de desarrollo
-npm run build    # build de producción
-npm run test     # correr tests
+npm run dev      # desarrollo
+npm run build    # producción
+npm run test     # tests
 ```
-
-## Deploy en Vercel
-
-1. Importar el repositorio en Vercel
-2. Agregar las variables de entorno en el panel de Vercel
-3. Vercel detecta automáticamente que es un proyecto Vite
 
 ## Estructura
 
@@ -86,6 +86,6 @@ src/
 ├─ routes/       # ProtectedRoute
 ├─ types/        # interfaces TypeScript
 └─ utils/        # validators
-functions/       # Serverless Functions (AWS SES)
+api/             # Serverless Functions (AWS SES)
 tests/           # unit tests
 ```
