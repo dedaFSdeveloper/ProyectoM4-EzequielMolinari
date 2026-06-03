@@ -1,5 +1,10 @@
 # ProyectoM4 - Ezequiel Molinari
 
+🔗 **Deploy:** https://proyecto-m4-ezequiel-molinari.vercel.app
+
+📧 **Email de prueba:** test.proyectom4@gmail.com  
+🔑 **Contraseña de prueba:** ADMIN1234
+
 SPA de gestión de tareas 
 
 ## Stack
