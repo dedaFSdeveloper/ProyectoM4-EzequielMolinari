@@ -34,7 +34,7 @@ const LoginPage = () => {
   return (
     <div className='page'>
       <div className='card'>
-        <p className='tag'>MateCode // auth</p>
+
         <h2 style={{ marginBottom: '28px', fontSize: '22px' }}>Iniciar sesión</h2>
         <form onSubmit={handleLogin}>
           <div className='form-group'>

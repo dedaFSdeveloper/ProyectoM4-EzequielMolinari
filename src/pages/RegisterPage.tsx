@@ -34,7 +34,7 @@ const RegisterPage = () => {
   return (
     <div className='page'>
       <div className='card'>
-        <p className='tag'>MateCode // registro</p>
+        
         <h2 style={{ marginBottom: '28px', fontSize: '22px' }}>Crear cuenta</h2>
         <form onSubmit={handleRegister}>
           <div className='form-group'>
