@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import toast from 'react-hot-toast'
 import type { Task } from '../types'
 
 interface Props {
@@ -21,6 +22,7 @@ const TodoList = ({ tasks, onToggle, onDelete, onEdit }: Props) => {
   const handleDelete = (taskId: string) => {
     if (window.confirm('¿Seguro que querés borrar esta tarea?')) {
       onDelete(taskId)
+      toast.success('Tarea eliminada')
     }
   }
 
@@ -33,24 +35,26 @@ const TodoList = ({ tasks, onToggle, onDelete, onEdit }: Props) => {
     if (editValue.trim() === '') return
     onEdit(taskId, editValue)
     setEditingId(null)
+    toast.success('Tarea editada')
   }
 
   return (
     <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '10px' }}>
       {tasks.map((task) => (
         <li
-          key={task.id}
-          style={{
-            background: 'var(--surface2)',
-            border: '1px solid var(--border)',
-            borderLeft: `3px solid ${task.completed ? 'var(--muted)' : coloresPrioridad[task.priority ?? 'media']}`,
-            borderRadius: 'var(--radius)',
-            padding: '14px 16px',
-            display: 'flex',
-            alignItems: 'flex-start',
-            gap: '12px',
-          }}
-        >
+  key={task.id}
+  style={{
+    background: 'var(--surface2)',
+    border: '1px solid var(--border)',
+    borderLeft: `3px solid ${task.completed ? 'var(--muted)' : coloresPrioridad[task.priority ?? 'media']}`,
+    borderRadius: 'var(--radius)',
+    padding: '14px 16px',
+    display: 'flex',
+    alignItems: 'flex-start',
+    gap: '12px',
+    animation: 'fadeSlideIn 0.25s ease',  // 👈 acá adentro
+  }}
+>
           <input
             type='checkbox'
             checked={task.completed}

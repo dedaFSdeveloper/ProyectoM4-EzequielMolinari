@@ -8,6 +8,7 @@ import TodoForm from '../components/TodoForm'
 import TodoList from '../components/TodoList'
 import TaskFilter from '../components/TaskFilter'
 import { sendTaskEmail } from '../services/emailService'
+import toast from 'react-hot-toast'
 import type { Task } from '../types'
 
 const TasksPage = () => {
@@ -18,6 +19,7 @@ const TasksPage = () => {
 
   const handleAddTask = async (title: string, description: string, dueDate?: string, priority?: 'baja' | 'media' | 'alta') => {
     await addTask(title, description, dueDate, priority)
+    toast.success('Tarea agregada')
     if (user?.email) {
       await sendTaskEmail(user.email, title)
     }
