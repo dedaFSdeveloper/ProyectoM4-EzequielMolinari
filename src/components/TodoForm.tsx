@@ -70,9 +70,9 @@ const TodoForm = ({ onAdd }: Props) => {
               <option value='alta'>alta</option>
             </select>
           </div>
-          <button type='submit' className='btn-primary' style={{ alignSelf: 'flex-start' }}>
-            + Agregar
-          </button>
+          <button type='submit' className='btn-primary' style={{ alignSelf: 'flex-start' }} disabled={!title.trim()}>
+  + Agregar
+</button>
         </div>
       </form>
     </div>

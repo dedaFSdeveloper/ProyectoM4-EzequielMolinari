@@ -51,9 +51,9 @@ const LoginPage = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
             {error && <p className='error-msg'>{error}</p>}
-            <button type='submit' className='btn-primary'>
-              Entrar
-            </button>
+            <button type='submit' className='btn-primary' disabled={!email || !password}>
+  Entrar
+</button>
           </div>
         </form>
         <p style={{ fontSize: '13px', color: 'var(--muted)' }}>
