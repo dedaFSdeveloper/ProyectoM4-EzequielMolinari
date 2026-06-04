@@ -51,9 +51,9 @@ const RegisterPage = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
             {error && <p className='error-msg'>{error}</p>}
-            <button type='submit' className='btn-primary'>
-              Registrarse
-            </button>
+            <button type='submit' className='btn-primary' disabled={!email || !password}>
+  Registrarse
+</button>
           </div>
         </form>
         <p style={{ fontSize: '13px', color: 'var(--muted)' }}>
