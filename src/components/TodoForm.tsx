@@ -37,11 +37,15 @@ const TodoForm = ({ onAdd }: Props) => {
             onChange={(e) => setTitle(e.target.value)}
           />
           <input
-            type='text'
-            placeholder='descripcion (opcional)'
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          />
+  type='text'
+  placeholder='titulo'
+  value={title}
+  onChange={(e) => setTitle(e.target.value)}
+  maxLength={100}
+/>
+<p style={{ fontSize: '11px', fontFamily: 'var(--mono)', color: title.length > 80 ? 'var(--danger)' : 'var(--muted)', textAlign: 'right', marginTop: '-8px' }}>
+  {title.length}/100
+</p>
           <div style={{ display: 'flex', gap: '12px' }}>
             <input
               type='date'
