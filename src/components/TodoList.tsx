@@ -42,19 +42,19 @@ const TodoList = ({ tasks, onToggle, onDelete, onEdit }: Props) => {
     <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '10px' }}>
       {tasks.map((task) => (
         <li
-  key={task.id}
-  style={{
-    background: 'var(--surface2)',
-    border: '1px solid var(--border)',
-    borderLeft: `3px solid ${task.completed ? 'var(--muted)' : coloresPrioridad[task.priority ?? 'media']}`,
-    borderRadius: 'var(--radius)',
-    padding: '14px 16px',
-    display: 'flex',
-    alignItems: 'flex-start',
-    gap: '12px',
-    animation: 'fadeSlideIn 0.25s ease',  // 👈 acá adentro
-  }}
->
+          key={task.id}
+          style={{
+            background: 'var(--surface2)',
+            border: '1px solid var(--border)',
+            borderLeft: `3px solid ${task.completed ? 'var(--muted)' : coloresPrioridad[task.priority ?? 'media']}`,
+            borderRadius: 'var(--radius)',
+            padding: '14px 16px',
+            display: 'flex',
+            alignItems: 'flex-start',
+            gap: '12px',
+            animation: 'fadeSlideIn 0.8s ease',
+          }}
+        >
           <input
             type='checkbox'
             checked={task.completed}
