@@ -28,15 +28,15 @@ SPA de gestión de tareas que permite a los usuarios organizar su trabajo diario
 ## Funcionalidades
 
 - Registro e inicio de sesión con email y contraseña
-- Alta, edición y eliminación de tareas
+- Edición y eliminación de tareas
 - Marcar tareas como completadas
 - Filtros: todas, pendientes y completadas
 - Prioridad por tarea (alta, media, baja) con ordenamiento automático
-- Fecha de vencimiento opcional — por decisión de diseño la fecha no es obligatoria.
+- Fecha de vencimiento opcional — por decisión de diseño la fecha no es obligatoria
 - Notificación por email al crear una tarea via AWS SES
 - Contador de tareas pendientes en tiempo real
-
-
+- Toasts de confirmación en acciones (agregar, editar, eliminar)
+- Animación de entrada al agregar una tarea nueva
 
 ## Instalación local
 
