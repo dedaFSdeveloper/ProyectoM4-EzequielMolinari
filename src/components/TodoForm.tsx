@@ -9,8 +9,9 @@ const TodoForm = ({ onAdd }: Props) => {
   const [description, setDescription] = useState('')
   const [dueDate, setDueDate] = useState('')
   const [priority, setPriority] = useState<'baja' | 'media' | 'alta'>('media')
+  const [guardando, setGuardando] = useState(false)
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
     if (title.trim() === '') {
@@ -18,11 +19,13 @@ const TodoForm = ({ onAdd }: Props) => {
       return
     }
 
-    onAdd(title, description, dueDate, priority)
+    setGuardando(true)
+    await onAdd(title, description, dueDate, priority)
     setTitle('')
     setDescription('')
     setDueDate('')
     setPriority('media')
+    setGuardando(false)
   }
 
   return (
@@ -35,17 +38,17 @@ const TodoForm = ({ onAdd }: Props) => {
             placeholder='titulo'
             value={title}
             onChange={(e) => setTitle(e.target.value)}
+            maxLength={100}
           />
+          <p style={{ fontSize: '11px', fontFamily: 'var(--mono)', color: title.length > 80 ? 'var(--danger)' : 'var(--muted)', textAlign: 'right', marginTop: '-8px' }}>
+            {title.length}/100
+          </p>
           <input
-  type='text'
-  placeholder='titulo'
-  value={title}
-  onChange={(e) => setTitle(e.target.value)}
-  maxLength={100}
-/>
-<p style={{ fontSize: '11px', fontFamily: 'var(--mono)', color: title.length > 80 ? 'var(--danger)' : 'var(--muted)', textAlign: 'right', marginTop: '-8px' }}>
-  {title.length}/100
-</p>
+            type='text'
+            placeholder='descripcion (opcional)'
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
           <div style={{ display: 'flex', gap: '12px' }}>
             <input
               type='date'
@@ -74,9 +77,14 @@ const TodoForm = ({ onAdd }: Props) => {
               <option value='alta'>alta</option>
             </select>
           </div>
-          <button type='submit' className='btn-primary' style={{ alignSelf: 'flex-start' }} disabled={!title.trim()}>
-  + Agregar
-</button>
+          <button
+            type='submit'
+            className='btn-primary'
+            style={{ alignSelf: 'flex-start' }}
+            disabled={!title.trim() || guardando}
+          >
+            {guardando ? 'guardando...' : '+ Agregar'}
+          </button>
         </div>
       </form>
     </div>
